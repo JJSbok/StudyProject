@@ -20,36 +20,33 @@ public class TodoMapperTests {
   @Autowired(required = false)
   private TodoMapper todoMapper;
 
-
-  @Test
-  public void testListCount() {
-
-    PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
-
-    long totalCount = todoMapper.listCount(pageRequestDTO);
-
-    log.info("=====================================");
-    log.info("=====================================");
-    log.info(totalCount);
-    log.info("=====================================");
-    log.info("=====================================");
-  }
-
-
   @Test
   public void testList() {
-    
+
     PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
 
     List<TodoDTO> list = todoMapper.list(pageRequestDTO);
 
     list.forEach(todo -> log.info(todo));
+  }
+
+  @Test
+  public void testListCount() {
+    PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
+
+    long totalCount = todoMapper.listCount(pageRequestDTO);
+
+    log.info("======================");
+    log.info("======================");
+    log.info(totalCount);
+    log.info("======================");
+    log.info("======================");
+
 
   }
 
-
-  @Commit
   @Transactional
+  @Commit
   @Test
   public void testInsert(){
 
@@ -65,8 +62,7 @@ public class TodoMapperTests {
     int count = todoMapper.insert(todoDTO);
 
     Assertions.assertEquals(count, 1);
-    
-    log.info("====================");
+
     log.info("====================");
     log.info(todoDTO.getTno());
     log.info("====================");

@@ -10,13 +10,20 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReplyDTO {
-    private Long rno;
-    private Long tno;
-    private String reply;
-    private String replyer;
 
-    private LocalDate replyDate;
+  private Long rno;
+  private Long tno;
+  private String reply;
+  private String replyer;
+
+  @Builder.Default
+  private Long gno = 0L;
+
+  private int step;
+
+  private LocalDate replyDate;
+  
 }

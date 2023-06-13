@@ -7,7 +7,9 @@ import org.zerock.bj2.dto.TodoDTO;
 
 @Transactional
 public interface TodoService {
-    
-    PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO);
-
+  
+  PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO);
 }
+
+
+

@@ -16,20 +16,21 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequiredArgsConstructor
 public class TodoServiceImple implements TodoService{
+  
+  private final TimeMapper timeMapper;
+  private final TodoMapper todoMapper;
+
+  @Override
+  public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
     
-    private final TimeMapper timeMapper;
-    private final TodoMapper todoMapper;
+    List<TodoDTO> list = todoMapper.list(pageRequestDTO);
+    long total = todoMapper.listCount(pageRequestDTO);
 
-    @Override
-    public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
+    return PageResponseDTO.<TodoDTO>withAll()
+    .list(list)
+    .total(total)
+    .build();
 
-        List<TodoDTO> list = todoMapper.list(pageRequestDTO);
-        long total = todoMapper.listCount(pageRequestDTO);
-
-        return PageResponseDTO.<TodoDTO>withAll()
-        .list(list)
-        .total(total)
-        .build();
-    }
-
+  }
+  
 }

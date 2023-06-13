@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TodoDTO {
-    
-    private Long tno;
-    private String title;
-    private String writer;
-    private String content;
-    private boolean complete;
-    private String dueDate;
-    
+  
+  private Long tno;
+  private String title;
+  private String writer;
+  private String content;
+  private boolean complete;
+  private String dueDate;
+  
 
 }
