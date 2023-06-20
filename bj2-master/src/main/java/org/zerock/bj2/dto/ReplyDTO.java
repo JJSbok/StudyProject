@@ -2,7 +2,8 @@ package org.zerock.bj2.dto;
 
 import java.time.LocalDate;
 
-
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,20 +11,22 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReplyDTO {
 
-  private Long rno;
-  private Long tno;
-  private String reply;
-  private String replyer;
+    private Long rno;
+    @NotNull
+    private Long tno;
+    @NotEmpty
+    private String reply;
+    @NotEmpty
+    private String replyer;
+    
+    @Builder.Default
+    private Long gno = 0L;
 
-  @Builder.Default
-  private Long gno = 0L;
+    private int step;
 
-  private int step;
-
-  private LocalDate replyDate;
-  
+    private LocalDate replyDate;
 }

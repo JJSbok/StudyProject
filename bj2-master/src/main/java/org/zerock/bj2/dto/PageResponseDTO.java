@@ -9,15 +9,16 @@ import lombok.Data;
 @Data
 
 public class PageResponseDTO<E> {
-  
-  private List<E> list;
+    
+    private List<E> list;
 
-  private long total;
+    private long total;
 
-  @Builder(builderMethodName =  "withAll")
-  public PageResponseDTO(List<E> list, long total ){
-    this.list = list;
-    this.total = total;
-  }
+    @Builder(builderMethodName = "withAll")
+    public PageResponseDTO(List<E> list, long total) {
+        this.list = list;
+        this.total = total;
+
+    }
 
 }

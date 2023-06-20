@@ -47,12 +47,13 @@ public class ReplyServiceImpl implements ReplyService{
 
     return result;
   }
+
   @Override
-  public PageResponseDTO<ReplyDTO> getList(Long tno, PageRequestDTO pageRequestDTO) {
-    
+  public PageResponseDTO<ReplyDTO> getList(Long tno, PageRequestDTO pageRequestDTO){
+
     pageRequestDTO.setSize(100);
 
-    List<ReplyDTO> list = replyMapper.selectList(tno, pageRequestDTO);
+    List<ReplyDTO> list = replyMapper.selectList((tno), pageRequestDTO);
     int total = replyMapper.getTnoCount(tno);
 
     return PageResponseDTO.<ReplyDTO>withAll()
@@ -60,6 +61,7 @@ public class ReplyServiceImpl implements ReplyService{
     .total(total)
     .build();
   }
+
   @Override
   public ReplyDTO getOne(Long tno) {
     

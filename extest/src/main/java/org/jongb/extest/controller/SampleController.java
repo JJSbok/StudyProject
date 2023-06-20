@@ -1,4 +1,4 @@
-package org.zerock.bj2.controller;
+package org.jongb.extest.controller;
 
 
 import lombok.extern.log4j.Log4j2;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Log4j2
 public class SampleController {
 
-    @GetMapping({"/hello","/list"})
+    @GetMapping("/hello")
     public void hello(){
-        log.info("sample/hello..................");
+        log.info("sample/hello..........");
     }
 }
