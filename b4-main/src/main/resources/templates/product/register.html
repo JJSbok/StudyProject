@@ -81,6 +81,8 @@
 
     actionForm.innerHTML += str
 
+    actionForm.submit()
+
   }, false)
 
 
@@ -133,6 +135,8 @@
     }
     uploadUL.innerHTML += str
 
+
+
   }
 
   const removeFile = (e, uuid, fileName) => {
@@ -155,10 +159,10 @@
 
   }
 
-  window.onbeforeunload = function (e) {
-
-    return 'Are you sure';
-  }
+  // window.onbeforeunload = function (e) {
+  //
+  //   return 'Are you sure';
+  // }
 
 </script>
 </body>
