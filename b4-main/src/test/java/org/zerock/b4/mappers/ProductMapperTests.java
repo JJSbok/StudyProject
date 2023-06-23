@@ -19,22 +19,23 @@ import lombok.extern.log4j.Log4j2;
 @SpringBootTest
 @Log4j2
 public class ProductMapperTests {
-
+    
     @Autowired(required = false)
     ProductMapper productMapper;
 
     @Test
-    public void testGetList() {
+    public void testGetList(){
 
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
 
         List<ProductListDTO> result = productMapper.getList(pageRequestDTO);
 
-        log.info("----------------");
+        log.info("----------------------");
 
         log.info(result);
-
     }
+
+
     @Transactional
     @Test
     @Commit
@@ -48,8 +49,6 @@ public class ProductMapperTests {
 
         List<String> fileNames = dto.getFileNames();
 
-
-
         int count = productMapper.insertProduct(dto);
 
         log.info("insert product count: " + count);
@@ -61,10 +60,10 @@ public class ProductMapperTests {
         AtomicInteger index = new AtomicInteger();
 
         List<Map<String,String>> list = fileNames.stream().map(str -> {
-            String uuid = str.substring(0, 36);
-            String fileName = str.substring(36);
+        String uuid = str.substring(0, 5);
+        String fileName = str.substring(6);
 
-            return Map.of("uuid", uuid, "fileName", fileName,"pno", ""+pno, "ord", "" + index.getAndIncrement());
+        return Map.of("uuid", uuid, "fileName", fileName,"pno", ""+pno, "ord", "" + index.getAndIncrement());
 
         }).collect(Collectors.toList());
 
@@ -74,7 +73,7 @@ public class ProductMapperTests {
 
         log.info("=====================" + countImages);
 
-
-    }
+  }
+    
 
 }

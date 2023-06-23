@@ -6,31 +6,28 @@
 <mapper namespace="org.zerock.b4.mappers.ProductMapper">
 
     <select id="getList" resultType="ProductListDTO">
-
-        select
-            p.pno, p.pname, p.price, p.status,
+        select 
+            p.pno, p.pname, p.price, p.status, 
             concat(pi.uuid,'_',pi.fileName) fileName
         from tbl_product p
-                 left outer join tbl_product_image pi on pi.pno = p.pno
+        left outer join tbl_product_image pi on pi.pno = p.pno
         where pi.ord = 0 or pi.ord is null
         order by p.pno desc
-            limit #{skip}, #{size}
+        limit #{skip}, #{size}
     </select>
 
-    <insert id="insertProduct">
-        insert into tbl_product (pname,price,status)
-        values (#{pname}, #{price}, #{status})
+    <insert id = "insertProduct">
+    insert into tbl_product (pname, price, status)
+    values (#{pname}, #{price}, #{status})
         <selectKey resultType="int" keyProperty="pno" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
 
-    <insert id="insertImages">
-
-        insert into tbl_product_image (uuid,pno,fileName, ord) values
+    <insert id = "insertImages">
+        insert into tbl_product_image (uuid, pno, fileName, ord) values
         <foreach collection="list" item="item" separator=",">
-            ( #{item.uuid}, #{item.pno}, #{item.fileName}, #{item.ord} )
+        ( #{item.uuid}, #{item.pno}, #{item.fileName}, #{item.ord} )
         </foreach>
     </insert>
-
 </mapper>
