@@ -5,33 +5,34 @@
 
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
 
 
 <div layout:fragment="content">
-  <h1>MyPage</h1>
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">MyPage</h3>
+    <h1>MyPage</h1>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">MyPage</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            [[${#authentication.principal.mname}]]
+            [[${#authentication.principal.email}]]
+            <hr/>
+            [[${#authentication}]]
+        </div>
     </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-        [[${#authentication.principal.mname}]]
-        <hr/>
-[[${#authentication}]]
-    </div>
-  </div>
 </div>
 
 <script layout:fragment="script">
-  const num = 10
+    const num = 10
 
-  console.log(jQuery)
+    console.log(jQuery)
 
 </script>
 

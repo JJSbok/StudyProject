@@ -33,14 +33,15 @@ public class CustomUserDetailsService implements UserDetailsService {
       log.info("==================================");
 
       MemberReadDTO readDTO = memberMapper.selectOne(username);
-      log.info(readDTO);
+
       log.info("----------------------------------------");
-  MemberDTO memberDTO = new MemberDTO(
-      username, 
-      readDTO.getMpw(), 
-      readDTO.getMname(),
-      readDTO.getRolenames()
-      );
+
+      MemberDTO memberDTO = new MemberDTO(
+          username,
+          readDTO.getMpw(),
+          readDTO.getMname(),
+          readDTO.getRolenames()
+          );
 
     
 
