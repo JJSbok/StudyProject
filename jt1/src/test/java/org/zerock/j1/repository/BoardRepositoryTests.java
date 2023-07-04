@@ -9,9 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.j1.domain.Board;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -90,5 +93,71 @@ public class BoardRepositoryTests {
         log.info("---------------------------------------------");
         log.info(result);
 
+    }
+
+    @Test
+    public void testQuery1_1(){
+
+
+        java.util.List<Board> list = boardRepository.listTitle("1");
+
+        log.info("---------------------------------------------");
+        log.info(list.size());
+        log.info(list);
+    }
+
+    @Test
+    public void testQuery1_2(){
+
+
+        java.util.List<Object[]> list = boardRepository.listTitle2("1");
+
+        log.info("---------------------------------------------");
+        log.info(list.size());
+        log.info(list);
+
+        list.forEach(arr -> log.info(Arrays.toString(arr)));
+    }
+
+    @Test
+    public void testQuery1_3(){
+
+    Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        Page<Object[]> result = boardRepository.listTitle3("1", pageable);
+
+        log.info("---------------------------------------------");
+        log.info(result);
+    }
+
+    @Transactional
+    @Test
+    @Commit
+    public void testModify(){
+        Long bno = 100L;
+        String title = "Modified Title 100";
+
+        int count = boardRepository.modifyTitle(title, bno);
+
+        log.info("---------------------");
+        log.info(count);
+    }
+
+    @Test
+    public void testNative(){
+       List<Object[]> result =  boardRepository.listNative();
+
+       result.forEach(arr -> log.info(Arrays.toString(arr)));
+
+    }
+
+    @Test
+    public void testSearch1(){
+
+        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
+        Page<Board> result = boardRepository.search1(null,"1",pageable);
+
+        log.info(result.getTotalElements());
+
+        result.get().forEach(b -> log.info(b));
     }
 }
