@@ -16,5 +16,23 @@ public class PageResponseDTO<E> {
 
     private List<E> dtoList;
 
+    private long totalCount;
+
+    private List<Integer> PageNums;
+
+    private boolean prev, next;
+
+    private PageRequestDTO requestDTO;
+
+    public PageResponseDTO(List<E> dtoList, Long totalCount, PageRequestDTO pageRequestDTO){
+
+        this.dtoList = dtoList;
+
+        this.totalCount = totalCount;
+
+        this.requestDTO = pageRequestDTO;
+
+    }
+
 
 }

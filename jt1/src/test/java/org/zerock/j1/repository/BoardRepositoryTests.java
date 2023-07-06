@@ -12,6 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.j1.domain.Board;
+import org.zerock.j1.dto.BoardListRcntDTO;
+import org.zerock.j1.dto.PageRequestDTO;
+import org.zerock.j1.dto.PageResponseDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -175,5 +178,16 @@ public class BoardRepositoryTests {
 
         boardRepository.searchWithRcnt("tcw","1",pageable);
 
+    }
+
+    @Test
+    public void test0706_1(){
+
+        PageRequestDTO pageRequest = new PageRequestDTO();
+
+        PageResponseDTO<BoardListRcntDTO> resonseDTO =
+                boardRepository.searchDTORcnt(pageRequest);
+
+        log.info(resonseDTO);
     }
 }
