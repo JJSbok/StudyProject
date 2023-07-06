@@ -10,6 +10,7 @@ package org.zerock.j1.dto;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Data
 public class PageResponseDTO<E> {
@@ -18,7 +19,7 @@ public class PageResponseDTO<E> {
 
     private long totalCount;
 
-    private List<Integer> PageNums;
+    private List<Integer> pageNums;
 
     private boolean prev, next;
 
@@ -50,7 +51,7 @@ public class PageResponseDTO<E> {
 
         this.next = (this.end * this.size) < totalCount;
 
-
+        this.pageNums = IntStream.rangeClosed(start, end).boxed().toList();
     }
 
 
