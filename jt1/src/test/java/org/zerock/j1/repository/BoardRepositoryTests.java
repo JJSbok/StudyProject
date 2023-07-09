@@ -13,6 +13,7 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.j1.domain.Board;
 import org.zerock.j1.dto.BoardListRcntDTO;
+import org.zerock.j1.dto.BoardReadDTO;
 import org.zerock.j1.dto.PageRequestDTO;
 import org.zerock.j1.dto.PageResponseDTO;
 
@@ -189,5 +190,16 @@ public class BoardRepositoryTests {
                 boardRepository.searchDTORcnt(pageRequest);
 
         log.info(resonseDTO);
+    }
+
+    @Test
+    public void testReadOne() {
+        Long bno = 77L;
+
+        BoardReadDTO dto = boardRepository.readOne(bno);
+        log.info(dto.getRegDate());
+        log.info(dto.getModDate());
+        log.info(dto.getClass().getName());
+        // jdk.proxy3.$Proxy197 결과 값
     }
 }
