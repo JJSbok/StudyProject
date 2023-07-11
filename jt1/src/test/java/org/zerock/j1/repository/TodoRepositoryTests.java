@@ -3,8 +3,6 @@ package org.zerock.j1.repository;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import javax.management.modelmbean.ModelMBean;
-
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,62 +19,59 @@ import lombok.extern.log4j.Log4j2;
 @SpringBootTest
 @Log4j2
 public class TodoRepositoryTests {
-  
-  @Autowired
-  private TodoRepository todoRepository;
+    
+    @Autowired
+    private TodoRepository todoRepository;
 
-  @Autowired
-  private ModelMapper modelMapper;
+    @Autowired
+    private ModelMapper modelMapper;
 
-  @Test
-  public void testRead() {
+    @Test
+    public void testRead() {
 
-    Long tno  = 100L;
+        Long tno = 100L;
 
-    Optional<Todo> result = todoRepository.findById(tno);
+        // Optional은 null을 대처하기 위해 사용
+        Optional<Todo> result = todoRepository.findById(tno);
 
-    Todo entity = result.orElseThrow();
+        Todo entity = result.orElseThrow();
 
-    log.info("ENTITY---------------");
-    log.info(entity);
+        log.info("ENTITY ------------------");
+        log.info(entity);
 
-    TodoDTO dto = modelMapper.map(entity, TodoDTO.class);
+        TodoDTO dto = modelMapper.map(entity, TodoDTO.class);
 
-    log.info(dto);
+        log.info(dto);
+    }
 
-  }
+    @Test
+    public void testInsert(){
 
-  @Test
-  public void testInsert() {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
+            Todo todo = Todo.builder()
+            .title("Title"+i)
+            .build();
 
-    IntStream.rangeClosed(1, 100).forEach(i -> {
+            Todo result = todoRepository.save(todo);
 
-      Todo todo = Todo.builder().title("Title"+i).build();
+            log.info(result);
 
-      Todo result = todoRepository.save(todo);
+        });
 
-      log.info(result);
+    }
 
-    });
+    @Test
+    public void testPaging(){
+        // 페이징은 0부터 시작
+        // 정렬에 쓰는 sort의 값은 엔티티 클래스의 멤버변수 이름이다.
+        Pageable pageable = 
+            PageRequest.of(0, 10, Sort.by("tno").descending());
 
-  }
+        // Pageable을 쓰면 리턴 타입은 Page타입.
+        Page<Todo> result = todoRepository.findAll(pageable);
 
-  @Test
-  public void testPaging() {
+        log.info(result);
 
-    Pageable pageable = 
-      PageRequest.of(0, 10, Sort.by("tno").descending());
-
-    Page<Todo> result = todoRepository.findAll(pageable);  
-
-    log.info(result);
-
-  }
+    }
 
 }
-
-
-
-
-
-

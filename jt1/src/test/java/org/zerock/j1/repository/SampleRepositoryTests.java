@@ -17,66 +17,61 @@ import lombok.extern.log4j.Log4j2;
 @SpringBootTest
 @Log4j2
 public class SampleRepositoryTests {
-  
-  @Autowired
-  private SampleRepository sampleRepository;
+    
+    @Autowired
+    private SampleRepository sampleRepository;
 
-  @Test
-  public void test1(){
-    log.info(sampleRepository.getClass().getName());
-  }
+    @Test
+    public void test1(){
+        log.info(sampleRepository.getClass().getName());
+    }
 
-  @Test
-  public void testInsert() {
+    @Test
+    public void testInsert() {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
+            Sample obj = Sample.builder()
+            .keyCol("u"+i)
+            .first("first")
+            .last("last"+i)
+            .build();
 
-    IntStream.rangeClosed(1, 100).forEach(i -> {
-      Sample obj  = Sample.builder()
-      .keyCol("u"+i)
-      .first("first")
-      .last("last" + i)
-      .build();
+            sampleRepository.save(obj);
+        });
+    }
 
-      sampleRepository.save(obj);
-    });
+    @Test
+    public void testRead(){
+        String keyCol = "u10";
 
-  }
+        Optional<Sample> result = sampleRepository.findById(keyCol);
 
-  @Test
-  public void testRead(){
+        Sample obj = result.orElseThrow();
 
-    String keyCol = "u10";
+        log.info(obj);
 
-    Optional<Sample> result = sampleRepository.findById(keyCol);
+    }
 
-    Sample obj = result.orElseThrow();
+    @Test
+    public void testDelete() {
+        String keyCol = "u1";
 
-    log.info(obj);
-  }
+        sampleRepository.deleteById(keyCol);
+    }
 
-  @Test
-  public void testDelete() {
-    String keyCol = "u1";
+    @Test
+    public void testPaging(){
+        // 페이징은 0부터 시작
+        Pageable pageable = PageRequest.of(0, 10, 
+                Sort.by("keyCol").descending());
 
-    sampleRepository.deleteById(keyCol);
+        // Pageable로 시작하면 Page로 결과
+        Page<Sample> result = sampleRepository.findAll(pageable);
 
-  }
+        log.info(result.getTotalElements());
+        log.info(result.getTotalPages());
 
-  @Test
-  public void testPaging(){
-
-    Pageable pageable = PageRequest.of(0,10, 
-          Sort.by("keyCol").descending());
-
-    Page<Sample> result = sampleRepository.findAll(pageable);
-
-    log.info(result.getTotalElements());
-    log.info(result.getTotalPages());
-
-    result.getContent().forEach(obj -> log.info(obj));
-
-
-
-  }
+        result.getContent().forEach(obj -> log.info(obj));
+    }
 
 
 }

@@ -12,24 +12,24 @@ import org.zerock.j1.dto.PageRequestDTO;
 import org.zerock.j1.dto.PageResponseDTO;
 
 public interface BoardSearch {
+    
+    // v1
+    // 1. 인터페이스 메소드 추가
+    Page<Board> search1(String searchType, String keyword, Pageable pageable);
 
-    //v1
-    Page<Board> search1( String searchType, String keyword, Pageable pageable);
-
-    //v2
+    // v2
     Page<Object[]> searchWithRcnt(String searchType, String keyword, Pageable pageable);
 
-    //v3
+    // v3
     PageResponseDTO<BoardListRcntDTO> searchDTORcnt(PageRequestDTO requestDTO);
 
     default Pageable makePageable(PageRequestDTO requestDTO){
 
-        Pageable pageable = PageRequest.of(
-                requestDTO.getPage() -1,
-                requestDTO.getSize(),
-                Sort.by("bno").descending()  );
+        Pageable pageable =  PageRequest.of(
+            requestDTO.getPage() -1,
+            requestDTO.getSize(),
+            Sort.by("bno").descending());
 
         return pageable;
     }
-
 }

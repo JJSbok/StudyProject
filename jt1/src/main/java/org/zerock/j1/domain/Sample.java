@@ -17,16 +17,20 @@ import lombok.ToString;
 @ToString
 @Getter
 public class Sample {
+    
+    // @Id = 기본 키
+    @Id
+    private String keyCol;
+    
+    // 컬럼 명이 DB의 예약어에 위반이 되지 않는지 고려
+    private String first;
 
-  @Id
-  private String keyCol;
+    private String last;
 
-  private String first;
-  
-  private String last;
+    private String addr;
 
-  private String zipCode;
+    private String zipCode;
 
-  private String city;
-  
+    private String city;
+
 }

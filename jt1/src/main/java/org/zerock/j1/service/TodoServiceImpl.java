@@ -22,67 +22,67 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @Service
 public class TodoServiceImpl implements TodoService{
-  
-  private final TodoRepository todoRepository;
-
-  private final ModelMapper modelMapper;
-
-  @Override
-  public PageResponseDTO<TodoDTO> getList() {
-  
-    Pageable pageable = 
-      PageRequest.of(0,20, Sort.by("tno").descending());
-
-    Page<Todo> result = todoRepository.findAll(pageable);
-
-    List<TodoDTO> dtoList = result.getContent().stream()
-      .map(todo -> modelMapper.map(todo, TodoDTO.class))
-      .collect(Collectors.toList());
     
-//    PageResponseDTO<TodoDTO> response = new PageResponseDTO<>();
-//    response.setDtoList(dtoList);
-//    return response;
-    return null;
-  }
+    private final TodoRepository todoRepository;
+    
+    private final ModelMapper modelMapper;
 
-  @Override
-  public TodoDTO register(TodoDTO dto) {
+    @Override
+    public PageResponseDTO<TodoDTO> getList() {
+        
+        Pageable pageable = 
+            PageRequest.of(0, 20, Sort.by("tno").descending());
 
-    Todo entity = modelMapper.map(dto, Todo.class);
+        Page<Todo> result = todoRepository.findAll(pageable);
 
-    Todo result = todoRepository.save(entity);
+        List<TodoDTO> dtoList = result.getContent().stream()
+        .map(todo -> modelMapper.map(todo, TodoDTO.class))
+        .collect(Collectors.toList());
 
-    return modelMapper.map(result, TodoDTO.class);
-  }
+        // PageResponseDTO<TodoDTO> response = new PageResponseDTO<>();
+        // response.setDtoList(dtoList);
+        // return response;
+        return null;
+    }
 
-  @Override
-  public TodoDTO getOne(Long tno) {
+    @Override
+    public TodoDTO register(TodoDTO dto) {
+        
+        Todo entity = modelMapper.map(dto, Todo.class);
 
-    Optional<Todo> result = todoRepository.findById(tno);
+        Todo result = todoRepository.save(entity);
 
-    Todo todo =result.orElseThrow();
+        return modelMapper.map(result, TodoDTO.class);
 
-    TodoDTO dto = modelMapper.map(todo, TodoDTO.class);
+    }
 
-    return dto;
+    @Override
+    public TodoDTO getOne(Long tno) {
+        
+        Optional<Todo> result = todoRepository.findById(tno);
 
-  }
+        Todo todo = result.orElseThrow();
 
-  @Override
-  public void remove(Long tno) {
-    todoRepository.deleteById(tno);
-  }
+        TodoDTO dto = modelMapper.map(todo, TodoDTO.class);
 
-  @Override
-  public void modify(TodoDTO dto) {
+        return dto;
+    }
 
-    Optional<Todo> result = todoRepository.findById(dto.getTno());
+    @Override
+    public void remove(Long tno) {
+        todoRepository.deleteById(tno);
+    }
 
-    Todo todo = result.orElseThrow();
+    @Override
+    public void modify(TodoDTO dto) {
+        
+        Optional<Todo> result = todoRepository.findById(dto.getTno());
 
-    todo.changeTitle(dto.getTitle());
+        Todo todo = result.orElseThrow();
 
-    todoRepository.save(todo);
+        todo.changeTitle(dto.getTitle());
 
-  }
+        todoRepository.save(todo);
+    }
+    
 }

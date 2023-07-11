@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
-        info = @Info(title = "JS App",version = "v1"))
+        info = @Info(title = "Zerock App",version = "v1"))
 @RequiredArgsConstructor
 @Configuration
 public class SwaggerConfig {
@@ -18,7 +18,7 @@ public class SwaggerConfig {
         String[] paths = {"/**"};
 
         return GroupedOpenApi.builder()
-                .group("JS OPEN API v1")
+                .group("Zerock OPEN API v1")
                 .pathsToMatch(paths)
                 .build();
     }

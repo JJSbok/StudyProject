@@ -1,15 +1,25 @@
 package org.zerock.j1.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
-@Table(name = "t_reply")
+@Table(name="t_reply")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = "board")
+@ToString(exclude = "board") // board는 빼라
 public class Reply {
 
     @Id
@@ -22,7 +32,17 @@ public class Reply {
 
     private String replyer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // 연관관계시 fetch는 기본으로 넣고 가라
+    // 내가 필요한 순간까지 조회하지 않겠다.
+    @ManyToOne(fetch = FetchType.LAZY) 
     private Board board;
+
+    public void changeText(String text) {
+        this.replyText = text;
+    }
+
+    public void changeFile(String fileName){
+        this.replyFile = fileName;
+    }
 
 }

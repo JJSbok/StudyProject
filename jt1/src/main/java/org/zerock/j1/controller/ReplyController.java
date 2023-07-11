@@ -27,15 +27,15 @@ import lombok.extern.log4j.Log4j2;
 public class ReplyController {
 
     private final ReplyService replyService;
-
+    
     @GetMapping("/{bno}/list")
     public PageResponseDTO<ReplyDTO> list(
-            @PathVariable("bno") Long bno,
-            ReplyPageRequestDTO requestDTO){
+        @PathVariable("bno") Long bno,
+        ReplyPageRequestDTO requestDTO){
 
         log.info("bno --- " + bno);
         log.info(requestDTO);
-
+        
         return replyService.list(requestDTO);
     }
 
@@ -68,7 +68,7 @@ public class ReplyController {
     public Map<String, Long> modify(@RequestBody ReplyDTO replyDTO){
 
         replyService.modify(replyDTO);
-
+        
         return Map.of("result", replyDTO.getRno());
     }
 
