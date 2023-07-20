@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/lteLayout2.html}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+ 
+
+    <div layout:fragment="content">
+        <h1>Todo List Page!!</h1><br>
+        <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Bordered Table</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table class="table table-bordered todoTable">
+                <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Task</th>
+                    <th>Progress</th>
+                    <th style="width: 40px">Label</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+
+                  <tr th:each="todo : ${pageResponseDTO.list}">
+                    <td>[[${todo.tno}]]</td>
+                    <td class="todoTD" th:data-tno="${todo.tno}">[[${todo.tno}]]</td>
+                    <td>
+                      <div class="progress progress-xs">
+                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                      </div>
+                    </td>
+                    <td><span class="badge bg-danger">55%</span></td>
+                  </tr>
+
+
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+              <ul class="pagination pagination-sm m-0 float-right todoUL">
+
+              </ul>
+            </div>
+          </div>
+          
+        <form class="actionForm" action="/todo/list" method="get">
+          <input type="hidden" name="page" value="3">
+          <input type="hidden" name="size" value="10">
+        </form>
+
+        <script src="/js/pageUtil.js"></script>
+    </div>
+
+    <script layout:fragment="script" th:inline="javascript">
+
+      const actionForm = document.querySelector(".actionForm")
+      const pageObj = actionForm.querySelector("input[name='page']")
+      const todoUL = document.querySelector(".todoUL")
+
+      todoUL.addEventListener("click", (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target // a 태그
+        const pageNum = target.getAttribute("href")
+        
+        pageObj.value = pageNum
+        actionForm.setAttribute("action", `/todo/list`)
+        actionForm.submit()
+      }, false)
+
+      
+        const {page,size} = [[${pageRequestDTO}]]
+        console.log(page,size)
+        const {total} = [[${pageResponseDTO}]]
+        console.log("total: " + total)
+
+
+        const pageLiStr = makePages(page, size, total)
+        todoUL.innerHTML = pageLiStr
+
+        const todoTable = document.querySelector(".todoTable")
+
+        todoTable.addEventListener("click", (e) => {
+
+          const target = e.target
+
+          if(!target.getAttribute("data-tno")){
+            return
+          }
+
+          const tno = target.getAttribute("data-tno")
+
+          console.log("TNO: " + tno)
+
+          actionForm.setAttribute("action", `/todo/read/${tno}`)
+
+          actionForm.submit()
+
+        }, false)
+
+    </script>
+
+</body>
+</html>
